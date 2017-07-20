@@ -60,7 +60,8 @@ public class PollyControllerTest {
 	public void shouldReturn200WhenSendingRequestToControllerToGetURL() throws Exception {
 		@SuppressWarnings("rawtypes")
 		PollyText text = new PollyText();
-		text.setText("TEST");
+		text.setText("ESTOU TESTANDO ESTE APLICATIVO");
+		text.setLanguageCode("pt-BR");
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<PollyText> request = new HttpEntity<>(text, headers);
