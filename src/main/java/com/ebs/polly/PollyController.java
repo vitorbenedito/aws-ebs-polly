@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/polly")
@@ -20,9 +21,16 @@ public class PollyController {
 	private PollyService pollyService;
 	
 	@PostMapping("/speech")
-    public void polly(@RequestBody PollyText pollyText, HttpServletResponse response) throws IOException {
+    public @ResponseBody String pollyURL(@RequestBody PollyText pollyText, HttpServletResponse response) throws IOException {
         
-		InputStream mp3Audio = pollyService.request(pollyText);
+		return pollyService.requestURL(pollyText).toString();
+		
+    }
+	
+	@PostMapping("/speech/stream")
+    public void pollyStream(@RequestBody PollyText pollyText, HttpServletResponse response) throws IOException {
+        
+		InputStream mp3Audio = pollyService.requestStream(pollyText);
 		
 		IOUtils.copy(mp3Audio, response.getOutputStream());
 		response.getOutputStream().flush();

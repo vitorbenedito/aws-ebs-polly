@@ -39,7 +39,7 @@ public class PollyControllerTest {
 	private TestRestTemplate testRestTemplate;
 
 	@Test
-	public void shouldReturn200WhenSendingRequestToController() throws Exception {
+	public void shouldReturn200WhenSendingRequestToControllerToGetStream() throws Exception {
 		@SuppressWarnings("rawtypes")
 		PollyText text = new PollyText();
 		text.setText("TEST");
@@ -49,11 +49,29 @@ public class PollyControllerTest {
 	   
 	    
 		ResponseEntity<byte[]> entity = this.testRestTemplate.postForEntity(
-				"http://localhost:" + this.port + "/polly/speech", request,byte[].class);
+				"http://localhost:" + this.port + "/polly/speech/stream", request,byte[].class);
 		
 		then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
 		
 		FileUtils.writeByteArrayToFile(new File("test.mp3"), entity.getBody());
+	}
+	
+	@Test
+	public void shouldReturn200WhenSendingRequestToControllerToGetURL() throws Exception {
+		@SuppressWarnings("rawtypes")
+		PollyText text = new PollyText();
+		text.setText("TEST");
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<PollyText> request = new HttpEntity<>(text, headers);
+	   
+	    
+		ResponseEntity<String> entity = this.testRestTemplate.postForEntity(
+				"http://localhost:" + this.port + "/polly/speech", request, String.class);
+		
+		then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+		
+		System.out.println(entity.getBody());
 	}
 
 	@Test
