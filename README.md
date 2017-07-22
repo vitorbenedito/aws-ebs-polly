@@ -1,12 +1,17 @@
 # aws-ebs-polly
 Simple spring-boot api to request polly mp3 file from AWS and return on response the URL stream or the MP3 stream.
 
+## Request example
+
 POST aws-eb-polly.us-east-2.elasticbeanstalk.com/polly/speech
+
+
 Body:
-{
-	"text":"Test Amazon Polly",
-	"languageCode":"ja-JP"
-}
+
+    {
+      "text" : Test Amazon Polly",
+      "languageCode" : "ja-JP",
+    }
 
 Response:
 
